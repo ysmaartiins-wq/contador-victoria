@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contagem regressiva</title>
+<style>
+body {
+  margin: 0;
+  padding: 24px 12px;
+  background: #F8DDE5;
+  color: #E06B83;
+  font-family: Georgia, serif;
+  text-align: center;
+}
+.titulo {
+  font-size: 14px;
+  letter-spacing: 5px;
+  margin-bottom: 18px;
+}
+.contador {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  max-width: 650px;
+  margin: auto;
+}
+.numero {
+  font-size: clamp(25px, 7vw, 48px);
+}
+.rotulo {
+  font-size: clamp(9px, 2.5vw, 13px);
+  color: #E06B83;
+}
+</style>
+</head>
+<body>
+
+<div class="titulo">FALTAM</div>
+
+<div class="contador">
+  <div>
+    <div class="numero" id="dias">00</div>
+    <div class="rotulo">DIAS</div>
+  </div>
+  <div>
+    <div class="numero" id="horas">00</div>
+    <div class="rotulo">HORAS</div>
+  </div>
+  <div>
+    <div class="numero" id="minutos">00</div>
+    <div class="rotulo">MINUTOS</div>
+  </div>
+  <div>
+    <div class="numero" id="segundos">00</div>
+    <div class="rotulo">SEGUNDOS</div>
+  </div>
+</div>
+
+<script>
+const festa = new Date("2027-01-09T20:30:00-03:00").getTime();
+
+function atualizar() {
+  const total = Math.max(0,
+    Math.floor((festa - Date.now()) / 1000));
+
+  const valores = {
+    dias: Math.floor(total / 86400),
+    horas: Math.floor(total / 3600) % 24,
+    minutos: Math.floor(total / 60) % 60,
+    segundos: total % 60
+  };
+
+  for (const id in valores) {
+    document.getElementById(id).textContent =
+      String(valores[id]).padStart(2, "0");
+  }
+}
+
+atualizar();
+setInterval(atualizar, 1000);
+</script>
+
+</body>
+</html>
